@@ -1,0 +1,11 @@
+#!/bin/bash
+
+raw_filename=$(wget ${1} |& grep "Saving to:" | sed "s/^.*Saving to: //" | sed "s/^‘//" | sed "s/’$//")
+
+echo "Saved: ‘$raw_filename’"
+
+filename=$(echo $raw_filename | sed -r "s/\/?\?.*$//" | sed "s/_[0-9a-f]*\././")
+
+mv ${raw_filename} ${filename}
+
+echo "Renamed: ‘$raw_filename’ --> ‘$filename’"
